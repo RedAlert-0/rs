@@ -2,6 +2,7 @@ use std::io;
 
 fn main() {
     let test_tup = [2, 4, 6, 23, 1, 6];
+    let test_vec = vec![1, 2, 4, 5, 7, 32, 23];
     task_1();
     task_2();
     task_3(&test_tup);
@@ -13,6 +14,7 @@ fn main() {
     task_10(3, -10, 10);
     task_11(5, 5, -10, 10);
     task_12(3, -10, 10);
+    task_13(test_vec);
 }
 
 fn task_1() {
@@ -217,6 +219,22 @@ fn task_12(size: usize, min_value: i64, max_value: i64) -> Vec<Vec<i64>> {
         }
     }
 
+    println!("{:?}", result);
+    result
+}
+
+fn task_13(tup: Vec<i32>) -> Vec<i32> {
+    let length = tup.len();
+    if length <= 1 {
+        return tup;
+    }
+    let mut result = vec![0; length];
+
+    result[0] = (tup[0] + tup[1]).div_euclid(2);
+    for i in 1..length - 1 {
+        result[i] = (tup[i - 1] + tup[i + 1] + tup[i]).div_euclid(3);
+    }
+    result[length - 1] = (tup[length - 1] + tup[length - 2]).div_euclid(2);
     println!("{:?}", result);
     result
 }
