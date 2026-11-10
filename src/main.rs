@@ -1,13 +1,12 @@
 use std::io;
 
 fn main() {
-    let test_tup = [2, 4, 6, 23, 1, 6];
     let test_vec = vec![1, 2, 4, 5, 7, 32, 23];
     task_1();
     task_2();
-    task_3(&test_tup);
-    task_4(&test_tup);
-    task_5(&test_tup);
+    task_3(test_vec.clone());
+    task_4(test_vec.clone());
+    task_5(test_vec.clone());
     task_6(3, 4);
     task_7();
     task_9();
@@ -74,7 +73,7 @@ fn task_2() {
     )
 }
 
-fn task_3(tup: &[i32]) {
+fn task_3(tup: Vec<i32>) {
     let for_sum = {
         let mut sum = 0;
         for i in 0..tup.len() {
@@ -84,7 +83,7 @@ fn task_3(tup: &[i32]) {
     };
     let foreach_sum = {
         let mut sum = 0;
-        for i in tup {
+        for i in &tup {
             sum += i
         }
         sum
@@ -92,8 +91,7 @@ fn task_3(tup: &[i32]) {
     println!("{:?}\n{:?}", for_sum, foreach_sum)
 }
 
-fn task_4(tup: &[i32]) -> Vec<i32> {
-    let mut tup = tup.to_vec();
+fn task_4(mut tup: Vec<i32>) -> Vec<i32> {
     let n = tup.len();
 
     for i in 0..n / 2 {
@@ -103,9 +101,9 @@ fn task_4(tup: &[i32]) -> Vec<i32> {
     tup
 }
 
-fn task_5(tup: &[i32]) -> i32 {
+fn task_5(tup: Vec<i32>) -> i32 {
     let mut counter = 0;
-    for i in tup {
+    for i in &tup {
         if *i > 0 {
             counter += 1
         };
