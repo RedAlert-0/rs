@@ -75,16 +75,16 @@ fn task_2() {
 
 fn task_3(tup: Vec<i32>) {
     let for_sum = {
-        let mut sum = 0;
+        let mut sum: i64 = 0;
         for i in 0..tup.len() {
-            sum += tup[i]
+            sum += tup[i] as i64
         }
         sum
     };
     let foreach_sum = {
-        let mut sum = 0;
+        let mut sum: i64 = 0;
         for i in &tup {
-            sum += i
+            sum += (*i) as i64
         }
         sum
     };
@@ -134,10 +134,10 @@ fn task_7() {
     let matrix = random_matrix(rows, cols, -50, 50);
 
     for i in 0..rows {
-        let mut sum = 0;
+        let mut sum: i64 = 0;
         for n in 0..cols {
             print!("[{:?}]", matrix[i][n]);
-            sum += matrix[i][n];
+            sum += matrix[i][n] as i64;
         }
         println!(" | sum {}", sum);
     }
@@ -148,12 +148,12 @@ fn task_9() -> i64 {
     let cols = 4;
     let matrix = random_matrix(rows, cols, -10, 10);
     let mut empty = true;
-    let mut result = 1;
+    let mut result: i64 = 1;
     for i in 0..rows {
         for n in 0..cols {
             if matrix[i][n] % 2 == 0 {
                 empty = false;
-                result *= matrix[i][n];
+                result *= matrix[i][n] as i64;
             }
         }
     }
@@ -166,23 +166,23 @@ fn task_9() -> i64 {
     }
 }
 
-fn task_10(size: usize, min_value: i64, max_value: i64) -> i64 {
+fn task_10(size: usize, min_value: i32, max_value: i32) -> i64 {
     let matrix = random_matrix(size, size, min_value, max_value);
-    let mut sum = 0;
+    let mut sum: i64 = 0;
     for i in 0..size {
-        sum += matrix[i][i]
+        sum += matrix[i][i] as i64
     }
     println!("{}", sum);
     sum
 }
 
-fn task_11(rows: usize, cols: usize, min_value: i64, max_value: i64) -> i64 {
+fn task_11(rows: usize, cols: usize, min_value: i32, max_value: i32) -> i64 {
     let matrix = random_matrix(rows, cols, min_value, max_value);
-    let mut sum = 0;
+    let mut sum: i64 = 0;
     for i in 0..rows {
         for n in 0..cols {
             if i.abs_diff(n) == 2 {
-                sum += matrix[i][n]
+                sum += matrix[i][n] as i64
             }
         }
     }
@@ -190,7 +190,7 @@ fn task_11(rows: usize, cols: usize, min_value: i64, max_value: i64) -> i64 {
     sum
 }
 
-fn task_12(size: usize, min_value: i64, max_value: i64) -> Vec<Vec<i64>> {
+fn task_12(size: usize, min_value: i32, max_value: i32) -> Vec<Vec<i64>> {
     let matrix = random_matrix(size, size, min_value, max_value);
     let mut products: Vec<i64> = vec![1; size];
     let mut zeros: Vec<usize> = vec![0; size];
@@ -200,7 +200,7 @@ fn task_12(size: usize, min_value: i64, max_value: i64) -> Vec<Vec<i64>> {
             if matrix[i][n] == 0 {
                 zeros[i] += 1;
             } else {
-                products[i] *= matrix[i][n];
+                products[i] *= matrix[i][n] as i64;
             }
         }
     }
@@ -210,7 +210,7 @@ fn task_12(size: usize, min_value: i64, max_value: i64) -> Vec<Vec<i64>> {
     for i in 0..size {
         for n in 0..size {
             result[i][n] = match zeros[i] {
-                0 => products[i] / matrix[i][n],
+                0 => products[i] / matrix[i][n] as i64,
                 1 if matrix[i][n] == 0 => products[i],
                 _ => 0,
             };
@@ -228,18 +228,26 @@ fn task_13(tup: Vec<i32>) -> Vec<i32> {
     }
     let mut result = vec![0; length];
 
-    result[0] = (tup[0] + tup[1]).div_euclid(2);
+    result[0] = average(&tup[0..=1]);
     for i in 1..length - 1 {
-        result[i] = (tup[i - 1] + tup[i + 1] + tup[i]).div_euclid(3);
+        result[i] = average(&[tup[i - 1], tup[i], tup[i + 1]]);
     }
-    result[length - 1] = (tup[length - 1] + tup[length - 2]).div_euclid(2);
+    result[length - 1] = average(&tup[length - 2..]);
     println!("{:?}", result);
     result
 }
 
 // Модули
-fn random_matrix(rows: usize, cols: usize, min_value: i64, max_value: i64) -> Vec<Vec<i64>> {
-    let mut matrix: Vec<Vec<i64>> = vec![vec![0; cols]; rows];
+fn average(values: &[i32]) -> i32 {
+    let mut sum: i64 = 0;
+    for i in 0..values.len() {
+        sum += values[i] as i64;
+    }
+    (sum.div_euclid(values.len() as i64)) as i32
+}
+
+fn random_matrix(rows: usize, cols: usize, min_value: i32, max_value: i32) -> Vec<Vec<i32>> {
+    let mut matrix: Vec<Vec<i32>> = vec![vec![0; cols]; rows];
     for i in 0..rows {
         for n in 0..cols {
             matrix[i][n] = rand::random_range(min_value..=max_value);
