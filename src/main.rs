@@ -17,6 +17,7 @@ fn main() {
 }
 
 fn task_1() {
+    println!("Задание 1:");
     let mut tup = [0; 5];
     for i in 0..5 {
         tup[i] = rand::random_range(1..=10);
@@ -24,9 +25,11 @@ fn task_1() {
     for i in 0..tup.len() {
         println!("{}", tup[i]);
     }
+    println!();
 }
 
 fn task_2() {
+    println!("Задание 2:");
     let tuple: [i32; 10] = [54, 7, -41, 2, 4, 2, 89, 33, -5, 12];
     let selection_sort_result = {
         let mut tuple_tmp = tuple;
@@ -70,10 +73,12 @@ fn task_2() {
     println!(
         "{:?}\n{:?}\n{:?}",
         selection_sort_result, bubble_sort_result, quick_sort_result
-    )
+    );
+    println!();
 }
 
 fn task_3(tup: Vec<i32>) {
+    println!("Задание 3:");
     let for_sum = {
         let mut sum: i64 = 0;
         for i in 0..tup.len() {
@@ -88,20 +93,24 @@ fn task_3(tup: Vec<i32>) {
         }
         sum
     };
-    println!("{:?}\n{:?}", for_sum, foreach_sum)
+    println!("{:?}\n{:?}", for_sum, foreach_sum);
+    println!();
 }
 
 fn task_4(mut tup: Vec<i32>) -> Vec<i32> {
+    println!("Задание 4:");
     let n = tup.len();
 
     for i in 0..n / 2 {
         tup.swap(i, n - i - 1);
     }
     println!("{:?}", tup);
+    println!();
     tup
 }
 
 fn task_5(tup: Vec<i32>) -> i32 {
+    println!("Задание 5:");
     let mut counter = 0;
     for i in &tup {
         if *i > 0 {
@@ -109,10 +118,12 @@ fn task_5(tup: Vec<i32>) -> i32 {
         };
     }
     println!("{}", counter);
+    println!();
     counter
 }
 
 fn task_6(rows: usize, cols: usize) {
+    println!("Задание 6:");
     let mut matrix: Vec<Vec<i32>> = vec![vec![0; cols]; rows];
     for i in 0..rows {
         for n in 0..cols {
@@ -126,9 +137,11 @@ fn task_6(rows: usize, cols: usize) {
         }
         println!();
     }
+    println!();
 }
 
 fn task_7() {
+    println!("Задание 7:");
     let rows = 3;
     let cols = 4;
     let matrix = random_matrix(rows, cols, -50, 50);
@@ -141,9 +154,11 @@ fn task_7() {
         }
         println!(" | sum {}", sum);
     }
+    println!();
 }
 
 fn task_9() -> i64 {
+    println!("Задание 9:");
     let rows = 3;
     let cols = 4;
     let matrix = random_matrix(rows, cols, -10, 10);
@@ -159,38 +174,46 @@ fn task_9() -> i64 {
     }
     if !empty {
         println!("{}", result);
+        println!();
         result
     } else {
         println!("no even numbers");
+        println!();
         -1
     }
 }
 
 fn task_10(size: usize, min_value: i32, max_value: i32) -> i64 {
+    println!("Задание 10:");
     let matrix = random_matrix(size, size, min_value, max_value);
     let mut sum: i64 = 0;
     for i in 0..size {
         sum += matrix[i][i] as i64
     }
     println!("{}", sum);
+    println!();
     sum
 }
 
 fn task_11(rows: usize, cols: usize, min_value: i32, max_value: i32) -> i64 {
+    println!("Задание 11:");
     let matrix = random_matrix(rows, cols, min_value, max_value);
     let mut sum: i64 = 0;
     for i in 0..rows {
         for n in 0..cols {
             if i.abs_diff(n) == 2 {
+                println!("matrix[{i}, {n}] = {}", matrix[i][n]);
                 sum += matrix[i][n] as i64
             }
         }
     }
-    println!("{}", sum);
+    println!("сумма {}", sum);
+    println!();
     sum
 }
 
 fn task_12(size: usize, min_value: i32, max_value: i32) -> Vec<Vec<i64>> {
+    println!("Задание 12:");
     let matrix = random_matrix(size, size, min_value, max_value);
     let mut products: Vec<i64> = vec![1; size];
     let mut zeros: Vec<usize> = vec![0; size];
@@ -217,13 +240,38 @@ fn task_12(size: usize, min_value: i32, max_value: i32) -> Vec<Vec<i64>> {
         }
     }
 
-    println!("{:?}", result);
+    println!("исходная матрица:");
+    for i in 0..size {
+        for n in 0..size {
+            if n > 0 {
+                print!(" ");
+            }
+            print!("{}", matrix[i][n]);
+        }
+        println!();
+    }
+
+    println!("итоговая матрица:");
+    for i in 0..size {
+        for n in 0..size {
+            if n > 0 {
+                print!(" ");
+            }
+            print!("{}", result[i][n]);
+        }
+        println!();
+    }
+    println!();
+
     result
 }
 
 fn task_13(tup: Vec<i32>) -> Vec<i32> {
+    println!("Задание 13:");
     let length = tup.len();
     if length <= 1 {
+        println!("{:?}", tup);
+        println!();
         return tup;
     }
     let mut result = vec![0; length];
@@ -234,6 +282,7 @@ fn task_13(tup: Vec<i32>) -> Vec<i32> {
     }
     result[length - 1] = average(&tup[length - 2..]);
     println!("{:?}", result);
+    println!();
     result
 }
 
